@@ -1,10 +1,10 @@
-all: roller.html
+all: index.html
 
-roller.html: roller.elm RollerStyle.elm RollerModel.elm RollerView.elm
-	elm-make roller.elm --output roller.html
+index.html: roller.elm RollerStyle.elm RollerModel.elm RollerView.elm
+	elm-make roller.elm --output index.html
 
 clean:
-	rm roller.html
+	rm index.html
 
 realclean:
-	rm -r roller.html elm-stuff
+	rm -r index.html elm-stuff

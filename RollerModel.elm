@@ -187,7 +187,9 @@ type Msg
     | NullStrMsg String
     | ClearAll
     | Roll
+    | RollOne Int
     | Results (List (List Int, List Int))
+    | ResultsOne Int (List Int, List Int)
     | NameChange Int String
     | DescChange Int String
     | EntryDone Int

@@ -27,7 +27,7 @@ dS_toString die =
 
 renderPool : Int -> Int -> Creature -> Element MyStyles MyVariations Msg
 renderPool cid max_width c =
-    column ActivePoolStyle [padding 5] [
+    column ActivePoolStyle [padding 5, spacing 5] [
         row NullStyle [spacing 5] <| List.append [
             el LabelStyle [] (text "Active"),
             el LabelStyle [width fill] (text "")
@@ -46,21 +46,30 @@ renderPool cid max_width c =
                         else
                             vary Ghosted True)
                     ] (text (dS_toString d))) c.skillPool,
-        wrappedRow NullStyle [spacing 5, padding 5] (
-            let ghost = case c.state of
-                SpendingSkill die -> case c.skillPool !! die of
-                    Just 1 -> 1
-                    Just 3 -> 10
-                    _ -> -1
-                _ -> -1 in
-            List.indexedMap (\sid x ->
-                button SetStyle [
-                        padding 5,
-                        vary MaxWidth (max_width >= 2 && x.width == max_width),
-                        Events.onClick (SpendSet cid sid),
-                        vary Ghosted (x.height == ghost)
-                    ] (text <| set_toString x))
-                c.activePool)
+        row NullStyle [width fill, spacing 5] [
+            wrappedRow NullStyle [width fill, spacing 5] (
+                let ghost = case c.state of
+                    SpendingSkill die -> case c.skillPool !! die of
+                        Just 1 -> 1
+                        Just 3 -> 10
+                        _ -> -1
+                    _ -> -1 in
+                    List.indexedMap (\sid x ->
+                        button SetStyle [
+                                padding 5,
+                                vary MaxWidth (max_width >= 2 && x.width == max_width),
+                                Events.onClick (SpendSet cid sid),
+                                vary Ghosted (x.height == ghost)
+                            ] (text <| set_toString x))
+                        c.activePool),
+            case c.state of
+                Normal -> button ButtonStyle [
+                            Events.onClick (RollOne cid),
+                            alignBottom,
+                            width (px 30),
+                            height (px 30)] (text "🎲")
+                _ -> empty
+        ]
     ]
 
 renderSpent : Int -> Creature -> Element MyStyles MyVariations Msg
@@ -79,12 +88,12 @@ renderSpent cid c =
 
 renderDamage : Int -> Creature -> Element MyStyles MyVariations Msg
 renderDamage cid c = 
-    column DamagePoolStyle [padding 5] [
+    column DamagePoolStyle [padding 5, spacing 5] [
         el LabelStyle [] (text <| "Damage (" ++ (toString (c.damageTokens + (List.length c.damagePool))) ++ ")"),
         let rcount = case c.state of
             Normal -> 4
             _ -> 2 in
-        grid NullStyle [padding 5, spacing 5] {
+        grid NullStyle [spacing 5] {
             columns = List.repeat 6 (fill),
             rows = List.repeat 2 (px 20),
             cells = List.range 0 ((6 * rcount) - 1) |> List.map (\x ->
@@ -228,8 +237,8 @@ view model =
     layout stylesheet <|
         column NullStyle [] [
             screen (
-                row TopBarStyle [width fill, paddingXY 10 5, spacing 5] [
-                    button ButtonStyle [ paddingXY 20 3, Events.onClick Roll ] (text "Roll"),
+                row TopBarStyle [width fill, padding 5, spacing 5] [
+                    button ButtonStyle [ paddingXY 20 3, Events.onClick Roll ] (text "Roll All"),
                     el NullStyle [width (fill)] (text ""),
                     button ButtonStyle [ paddingXY 20 3, Events.onClick ClearAll ] (text "Remove All")
                 ]),

@@ -11571,8 +11571,15 @@ var _dskyle$oreroller$RollerModel$NameChange = F2(
 	function (a, b) {
 		return {ctor: 'NameChange', _0: a, _1: b};
 	});
+var _dskyle$oreroller$RollerModel$ResultsOne = F2(
+	function (a, b) {
+		return {ctor: 'ResultsOne', _0: a, _1: b};
+	});
 var _dskyle$oreroller$RollerModel$Results = function (a) {
 	return {ctor: 'Results', _0: a};
+};
+var _dskyle$oreroller$RollerModel$RollOne = function (a) {
+	return {ctor: 'RollOne', _0: a};
 };
 var _dskyle$oreroller$RollerModel$Roll = {ctor: 'Roll'};
 var _dskyle$oreroller$RollerModel$ClearAll = {ctor: 'ClearAll'};
@@ -26757,7 +26764,11 @@ var _dskyle$oreroller$RollerView$renderPool = F3(
 			{
 				ctor: '::',
 				_0: _mdgriffith$style_elements$Element_Attributes$padding(5),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Element_Attributes$spacing(5),
+					_1: {ctor: '[]'}
+				}
 			},
 			{
 				ctor: '::',
@@ -26838,78 +26849,128 @@ var _dskyle$oreroller$RollerView$renderPool = F3(
 				_1: {
 					ctor: '::',
 					_0: A3(
-						_mdgriffith$style_elements$Element$wrappedRow,
+						_mdgriffith$style_elements$Element$row,
 						_dskyle$oreroller$RollerStyle$NullStyle,
 						{
 							ctor: '::',
-							_0: _mdgriffith$style_elements$Element_Attributes$spacing(5),
+							_0: _mdgriffith$style_elements$Element_Attributes$width(_mdgriffith$style_elements$Element_Attributes$fill),
 							_1: {
 								ctor: '::',
-								_0: _mdgriffith$style_elements$Element_Attributes$padding(5),
+								_0: _mdgriffith$style_elements$Element_Attributes$spacing(5),
 								_1: {ctor: '[]'}
 							}
 						},
-						function () {
-							var ghost = function () {
-								var _p3 = c.state;
-								if (_p3.ctor === 'SpendingSkill') {
-									var _p4 = A2(_elm_community$list_extra$List_Extra_ops['!!'], c.skillPool, _p3._0);
-									_v3_2:
-									do {
-										if (_p4.ctor === 'Just') {
-											switch (_p4._0) {
-												case 1:
-													return 1;
-												case 3:
-													return 10;
-												default:
+						{
+							ctor: '::',
+							_0: A3(
+								_mdgriffith$style_elements$Element$wrappedRow,
+								_dskyle$oreroller$RollerStyle$NullStyle,
+								{
+									ctor: '::',
+									_0: _mdgriffith$style_elements$Element_Attributes$width(_mdgriffith$style_elements$Element_Attributes$fill),
+									_1: {
+										ctor: '::',
+										_0: _mdgriffith$style_elements$Element_Attributes$spacing(5),
+										_1: {ctor: '[]'}
+									}
+								},
+								function () {
+									var ghost = function () {
+										var _p3 = c.state;
+										if (_p3.ctor === 'SpendingSkill') {
+											var _p4 = A2(_elm_community$list_extra$List_Extra_ops['!!'], c.skillPool, _p3._0);
+											_v3_2:
+											do {
+												if (_p4.ctor === 'Just') {
+													switch (_p4._0) {
+														case 1:
+															return 1;
+														case 3:
+															return 10;
+														default:
+															break _v3_2;
+													}
+												} else {
 													break _v3_2;
-											}
+												}
+											} while(false);
+											return -1;
 										} else {
-											break _v3_2;
+											return -1;
 										}
-									} while(false);
-									return -1;
-								} else {
-									return -1;
-								}
-							}();
-							return A2(
-								_elm_lang$core$List$indexedMap,
-								F2(
-									function (sid, x) {
-										return A3(
-											_mdgriffith$style_elements$Element$button,
-											_dskyle$oreroller$RollerStyle$SetStyle,
-											{
-												ctor: '::',
-												_0: _mdgriffith$style_elements$Element_Attributes$padding(5),
-												_1: {
-													ctor: '::',
-													_0: A2(
-														_mdgriffith$style_elements$Element_Attributes$vary,
-														_dskyle$oreroller$RollerStyle$MaxWidth,
-														(_elm_lang$core$Native_Utils.cmp(max_width, 2) > -1) && _elm_lang$core$Native_Utils.eq(x.width, max_width)),
-													_1: {
+									}();
+									return A2(
+										_elm_lang$core$List$indexedMap,
+										F2(
+											function (sid, x) {
+												return A3(
+													_mdgriffith$style_elements$Element$button,
+													_dskyle$oreroller$RollerStyle$SetStyle,
+													{
 														ctor: '::',
-														_0: _mdgriffith$style_elements$Element_Events$onClick(
-															A2(_dskyle$oreroller$RollerModel$SpendSet, cid, sid)),
+														_0: _mdgriffith$style_elements$Element_Attributes$padding(5),
 														_1: {
 															ctor: '::',
 															_0: A2(
 																_mdgriffith$style_elements$Element_Attributes$vary,
-																_dskyle$oreroller$RollerStyle$Ghosted,
-																_elm_lang$core$Native_Utils.eq(x.height, ghost)),
+																_dskyle$oreroller$RollerStyle$MaxWidth,
+																(_elm_lang$core$Native_Utils.cmp(max_width, 2) > -1) && _elm_lang$core$Native_Utils.eq(x.width, max_width)),
+															_1: {
+																ctor: '::',
+																_0: _mdgriffith$style_elements$Element_Events$onClick(
+																	A2(_dskyle$oreroller$RollerModel$SpendSet, cid, sid)),
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_mdgriffith$style_elements$Element_Attributes$vary,
+																		_dskyle$oreroller$RollerStyle$Ghosted,
+																		_elm_lang$core$Native_Utils.eq(x.height, ghost)),
+																	_1: {ctor: '[]'}
+																}
+															}
+														}
+													},
+													_mdgriffith$style_elements$Element$text(
+														_dskyle$oreroller$RollerView$set_toString(x)));
+											}),
+										c.activePool);
+								}()),
+							_1: {
+								ctor: '::',
+								_0: function () {
+									var _p5 = c.state;
+									if (_p5.ctor === 'Normal') {
+										return A3(
+											_mdgriffith$style_elements$Element$button,
+											_dskyle$oreroller$RollerStyle$ButtonStyle,
+											{
+												ctor: '::',
+												_0: _mdgriffith$style_elements$Element_Events$onClick(
+													_dskyle$oreroller$RollerModel$RollOne(cid)),
+												_1: {
+													ctor: '::',
+													_0: _mdgriffith$style_elements$Element_Attributes$alignBottom,
+													_1: {
+														ctor: '::',
+														_0: _mdgriffith$style_elements$Element_Attributes$width(
+															_mdgriffith$style_elements$Element_Attributes$px(30)),
+														_1: {
+															ctor: '::',
+															_0: _mdgriffith$style_elements$Element_Attributes$height(
+																_mdgriffith$style_elements$Element_Attributes$px(30)),
 															_1: {ctor: '[]'}
 														}
 													}
 												}
 											},
-											_mdgriffith$style_elements$Element$text(
-												_dskyle$oreroller$RollerView$set_toString(x)));
-									}),
-								c.activePool);
-						}()),
+											_mdgriffith$style_elements$Element$text('🎲'));
+									} else {
+										return _mdgriffith$style_elements$Element$empty;
+									}
+								}(),
+								_1: {ctor: '[]'}
+							}
+						}),
 					_1: {ctor: '[]'}
 				}
 			});
@@ -26922,7 +26983,11 @@ var _dskyle$oreroller$RollerView$renderDamage = F2(
 			{
 				ctor: '::',
 				_0: _mdgriffith$style_elements$Element_Attributes$padding(5),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Element_Attributes$spacing(5),
+					_1: {ctor: '[]'}
+				}
 			},
 			{
 				ctor: '::',
@@ -26943,8 +27008,8 @@ var _dskyle$oreroller$RollerView$renderDamage = F2(
 					ctor: '::',
 					_0: function () {
 						var rcount = function () {
-							var _p5 = c.state;
-							if (_p5.ctor === 'Normal') {
+							var _p6 = c.state;
+							if (_p6.ctor === 'Normal') {
 								return 4;
 							} else {
 								return 2;
@@ -26955,12 +27020,8 @@ var _dskyle$oreroller$RollerView$renderDamage = F2(
 							_dskyle$oreroller$RollerStyle$NullStyle,
 							{
 								ctor: '::',
-								_0: _mdgriffith$style_elements$Element_Attributes$padding(5),
-								_1: {
-									ctor: '::',
-									_0: _mdgriffith$style_elements$Element_Attributes$spacing(5),
-									_1: {ctor: '[]'}
-								}
+								_0: _mdgriffith$style_elements$Element_Attributes$spacing(5),
+								_1: {ctor: '[]'}
 							},
 							{
 								columns: A2(_elm_lang$core$List$repeat, 6, _mdgriffith$style_elements$Element_Attributes$fill),
@@ -27007,14 +27068,14 @@ var _dskyle$oreroller$RollerView$renderDamage = F2(
 																				{ctor: '[]'},
 																				_mdgriffith$style_elements$Element$text('⬤'));
 																		} else {
-																			var _p6 = A2(_elm_community$list_extra$List_Extra_ops['!!'], c.damagePool, x - c.damageTokens);
-																			if (_p6.ctor === 'Just') {
+																			var _p7 = A2(_elm_community$list_extra$List_Extra_ops['!!'], c.damagePool, x - c.damageTokens);
+																			if (_p7.ctor === 'Just') {
 																				return A3(
 																					_mdgriffith$style_elements$Element$el,
 																					_dskyle$oreroller$RollerStyle$NullStyle,
 																					{ctor: '[]'},
 																					_mdgriffith$style_elements$Element$text(
-																						_elm_lang$core$Basics$toString(_p6._0)));
+																						_elm_lang$core$Basics$toString(_p7._0)));
 																			} else {
 																				return A3(
 																					_mdgriffith$style_elements$Element$el,
@@ -27091,13 +27152,13 @@ var _dskyle$oreroller$RollerView$renderDamage = F2(
 					_1: {
 						ctor: '::',
 						_0: function () {
-							var _p7 = c.state;
-							switch (_p7.ctor) {
+							var _p8 = c.state;
+							switch (_p8.ctor) {
 								case 'DamagePending':
-									var _p9 = _p7._2;
-									var _p8 = _p7._1;
-									var rlen = _elm_lang$core$List$length(_p9);
-									var dlen = _elm_lang$core$List$length(_p8);
+									var _p10 = _p8._2;
+									var _p9 = _p8._1;
+									var rlen = _elm_lang$core$List$length(_p10);
+									var dlen = _elm_lang$core$List$length(_p9);
 									var tlen = dlen + rlen;
 									return A3(
 										_mdgriffith$style_elements$Element$wrappedRow,
@@ -27132,7 +27193,7 @@ var _dskyle$oreroller$RollerView$renderDamage = F2(
 															_mdgriffith$style_elements$Element$text(
 																_elm_lang$core$Basics$toString(d)));
 													},
-													_p9),
+													_p10),
 												_1: {
 													ctor: '::',
 													_0: A2(
@@ -27149,12 +27210,12 @@ var _dskyle$oreroller$RollerView$renderDamage = F2(
 																_mdgriffith$style_elements$Element$text(
 																	_elm_lang$core$Basics$toString(d)));
 														},
-														_p8),
+														_p9),
 													_1: {
 														ctor: '::',
 														_0: A2(
 															_elm_lang$core$List$repeat,
-															_p7._0 - tlen,
+															_p8._0 - tlen,
 															A3(
 																_mdgriffith$style_elements$Element$el,
 																_dskyle$oreroller$RollerStyle$DamageCellStyle,
@@ -27223,7 +27284,7 @@ var _dskyle$oreroller$RollerView$renderDamage = F2(
 															_mdgriffith$style_elements$Element$text(
 																_dskyle$oreroller$RollerView$set_toString(s)));
 													},
-													_p7._0)),
+													_p8._0)),
 											_1: {
 												ctor: '::',
 												_0: A3(
@@ -27640,7 +27701,7 @@ var _dskyle$oreroller$RollerView$view = function (model) {
 							_0: _mdgriffith$style_elements$Element_Attributes$width(_mdgriffith$style_elements$Element_Attributes$fill),
 							_1: {
 								ctor: '::',
-								_0: A2(_mdgriffith$style_elements$Element_Attributes$paddingXY, 10, 5),
+								_0: _mdgriffith$style_elements$Element_Attributes$padding(5),
 								_1: {
 									ctor: '::',
 									_0: _mdgriffith$style_elements$Element_Attributes$spacing(5),
@@ -27662,7 +27723,7 @@ var _dskyle$oreroller$RollerView$view = function (model) {
 										_1: {ctor: '[]'}
 									}
 								},
-								_mdgriffith$style_elements$Element$text('Roll')),
+								_mdgriffith$style_elements$Element$text('Roll All')),
 							_1: {
 								ctor: '::',
 								_0: A3(
@@ -27993,6 +28054,34 @@ var _dskyle$oreroller$Main$update = F2(
 						_1: {ctor: '[]'}
 					});
 			});
+		var updateSets = F3(
+			function (c, l, s) {
+				var dplen = _elm_lang$core$List$length(c.damagePool);
+				return _elm_lang$core$Native_Utils.update(
+					c,
+					{
+						activePool: _dskyle$oreroller$RollerModel$gen_sets(
+							A2(_elm_lang$core$List$take, c.d10s - dplen, l)),
+						skillPool: _elm_lang$core$List$sort(
+							A2(_elm_lang$core$List$take, c.dSs, s)),
+						spentPool: {ctor: '[]'},
+						state: _dskyle$oreroller$RollerModel$Normal
+					});
+			});
+		var roll = A3(
+			_elm_lang$core$Random$map2,
+			F2(
+				function (v0, v1) {
+					return {ctor: '_Tuple2', _0: v0, _1: v1};
+				}),
+			A2(
+				_elm_lang$core$Random$list,
+				15,
+				A2(_elm_lang$core$Random$int, 1, 10)),
+			A2(
+				_elm_lang$core$Random$list,
+				3,
+				A2(_elm_lang$core$Random$int, 1, 3)));
 		var silent_update = base_update(
 			_elm_lang$core$Basics$always(_elm_lang$core$Platform_Cmd$none));
 		var simple_update = base_update(_dskyle$oreroller$Main$save_cmd);
@@ -28068,20 +28157,16 @@ var _dskyle$oreroller$Main$update = F2(
 						A2(
 							_elm_lang$core$Random$list,
 							_elm_lang$core$List$length(model.creatures),
-							A3(
-								_elm_lang$core$Random$map2,
-								F2(
-									function (v0, v1) {
-										return {ctor: '_Tuple2', _0: v0, _1: v1};
-									}),
-								A2(
-									_elm_lang$core$Random$list,
-									15,
-									A2(_elm_lang$core$Random$int, 1, 10)),
-								A2(
-									_elm_lang$core$Random$list,
-									3,
-									A2(_elm_lang$core$Random$int, 1, 3)))))
+							roll))
+				};
+			case 'RollOne':
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: A2(
+						_elm_lang$core$Random$generate,
+						_dskyle$oreroller$RollerModel$ResultsOne(_p15._0),
+						roll)
 				};
 			case 'Results':
 				var l = A2(_elm_community$list_extra$List_Extra$zip, model.creatures, _p15._0);
@@ -28092,18 +28177,7 @@ var _dskyle$oreroller$Main$update = F2(
 							_elm_lang$core$List$map,
 							function (_p16) {
 								var _p17 = _p16;
-								var _p18 = _p17._0;
-								var dplen = _elm_lang$core$List$length(_p18.damagePool);
-								return _elm_lang$core$Native_Utils.update(
-									_p18,
-									{
-										activePool: _dskyle$oreroller$RollerModel$gen_sets(
-											A2(_elm_lang$core$List$take, _p18.d10s - dplen, _p17._1._0)),
-										skillPool: _elm_lang$core$List$sort(
-											A2(_elm_lang$core$List$take, _p18.dSs, _p17._1._1)),
-										spentPool: {ctor: '[]'},
-										state: _dskyle$oreroller$RollerModel$Normal
-									});
+								return A3(updateSets, _p17._0, _p17._1._0, _p17._1._1);
 							},
 							l)
 					});
@@ -28113,36 +28187,36 @@ var _dskyle$oreroller$Main$update = F2(
 					_1: _dskyle$oreroller$Main$save_cmd(mod)
 				};
 			case 'DamageResult':
-				var _p25 = _p15._1;
-				var _p24 = _p15._2;
-				var _p23 = _p15._0;
-				var c = A2(_elm_community$list_extra$List_Extra$getAt, _p23, model.creatures);
-				var _p19 = c;
-				if (_p19.ctor === 'Nothing') {
+				var _p24 = _p15._1;
+				var _p23 = _p15._2;
+				var _p22 = _p15._0;
+				var c = A2(_elm_community$list_extra$List_Extra$getAt, _p22, model.creatures);
+				var _p18 = c;
+				if (_p18.ctor === 'Nothing') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						model,
 						{ctor: '[]'});
 				} else {
-					var _p22 = _p19._0;
+					var _p21 = _p18._0;
 					var num10s = A2(
 						_elm_community$list_extra$List_Extra$count,
 						F2(
 							function (x, y) {
 								return _elm_lang$core$Native_Utils.eq(x, y);
 							})(10),
-						_p24);
+						_p23);
 					var num1s = A2(
 						_elm_community$list_extra$List_Extra$count,
 						F2(
 							function (x, y) {
 								return _elm_lang$core$Native_Utils.eq(x, y);
 							})(1),
-						_p24);
-					var plen = _elm_lang$core$List$length(_p25);
-					var dlen = _elm_lang$core$List$length(_p24);
+						_p23);
+					var plen = _elm_lang$core$List$length(_p24);
+					var dlen = _elm_lang$core$List$length(_p23);
 					var tlen = dlen + plen;
-					var _p20 = function () {
+					var _p19 = function () {
 						if (_elm_lang$core$Native_Utils.eq(num10s, 0)) {
 							var pool = A2(
 								_elm_lang$core$List$filter,
@@ -28150,26 +28224,26 @@ var _dskyle$oreroller$Main$update = F2(
 									function (x, y) {
 										return !_elm_lang$core$Native_Utils.eq(x, y);
 									})(1),
-								A2(_elm_lang$core$List$append, _p24, _p25));
+								A2(_elm_lang$core$List$append, _p23, _p24));
 							var pool_len = _elm_lang$core$List$length(pool);
-							var old_len = _elm_lang$core$List$length(_p22.damagePool);
-							var active_len = _elm_lang$core$List$length(_p22.activePool);
+							var old_len = _elm_lang$core$List$length(_p21.damagePool);
+							var active_len = _elm_lang$core$List$length(_p21.activePool);
 							var total_len = pool_len + old_len;
-							var elig_tokens = A3(_elm_lang$core$Basics$clamp, 0, 6, 6 - _p22.damageTokens);
+							var elig_tokens = A3(_elm_lang$core$Basics$clamp, 0, 6, 6 - _p21.damageTokens);
 							var elig_dice = A3(_elm_lang$core$Basics$clamp, 0, 6, 6 - old_len);
 							var new_tokens = A3(_elm_lang$core$Basics$clamp, 0, elig_tokens, pool_len);
 							var new_dice = A3(_elm_lang$core$Basics$clamp, 0, elig_dice, pool_len - elig_tokens);
-							var elig_spent = A3(_elm_lang$core$Basics$clamp, 0, _p22.d10s, ((_p22.d10s - active_len) - old_len) - new_dice);
-							var _p21 = A2(_elm_community$list_extra$List_Extra$splitAt, new_dice, pool);
-							var dmg_pool = _p21._0;
-							var spent_pool = _p21._1;
+							var elig_spent = A3(_elm_lang$core$Basics$clamp, 0, _p21.d10s, ((_p21.d10s - active_len) - old_len) - new_dice);
+							var _p20 = A2(_elm_community$list_extra$List_Extra$splitAt, new_dice, pool);
+							var dmg_pool = _p20._0;
+							var spent_pool = _p20._1;
 							return {
 								ctor: '_Tuple2',
 								_0: _elm_lang$core$Native_Utils.update(
-									_p22,
+									_p21,
 									{
-										damagePool: A2(_elm_lang$core$List$append, _p22.damagePool, dmg_pool),
-										damageTokens: _p22.damageTokens + new_tokens,
+										damagePool: A2(_elm_lang$core$List$append, _p21.damagePool, dmg_pool),
+										damageTokens: _p21.damageTokens + new_tokens,
 										state: _dskyle$oreroller$RollerModel$DamageDealt(
 											_dskyle$oreroller$RollerModel$gen_sets(
 												A2(
@@ -28182,7 +28256,7 @@ var _dskyle$oreroller$Main$update = F2(
 											_elm_lang$core$List$concat(
 												{
 													ctor: '::',
-													_0: _p22.spentPool,
+													_0: _p21.spentPool,
 													_1: {
 														ctor: '::',
 														_0: A2(_elm_lang$core$List$repeat, num1s, 1),
@@ -28199,9 +28273,9 @@ var _dskyle$oreroller$Main$update = F2(
 						} else {
 							return A2(
 								_dskyle$oreroller$Main$do_damage,
-								_p23,
+								_p22,
 								_elm_lang$core$Native_Utils.update(
-									_p22,
+									_p21,
 									{
 										state: A3(
 											_dskyle$oreroller$RollerModel$DamagePending,
@@ -28209,23 +28283,23 @@ var _dskyle$oreroller$Main$update = F2(
 											A2(_elm_lang$core$List$repeat, num10s, 10),
 											A2(
 												_elm_lang$core$List$append,
-												_p25,
+												_p24,
 												A2(
 													_elm_lang$core$List$filter,
 													F2(
 														function (x, y) {
 															return !_elm_lang$core$Native_Utils.eq(x, y);
 														})(10),
-													_p24)))
+													_p23)))
 									}));
 						}
 					}();
-					var cp = _p20._0;
-					var cmd = _p20._1;
+					var cp = _p19._0;
+					var cmd = _p19._1;
 					var mod = _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							creatures: A3(_elm_community$list_extra$List_Extra$setAt, _p23, cp, model.creatures)
+							creatures: A3(_elm_community$list_extra$List_Extra$setAt, _p22, cp, model.creatures)
 						});
 					return {
 						ctor: '_Tuple2',
@@ -28234,63 +28308,63 @@ var _dskyle$oreroller$Main$update = F2(
 					};
 				}
 			case 'SpendSet':
-				var _p33 = _p15._1;
-				var _p32 = _p15._0;
-				var c = A2(_elm_community$list_extra$List_Extra$getAt, _p32, model.creatures);
-				var _p26 = c;
-				if (_p26.ctor === 'Nothing') {
+				var _p32 = _p15._1;
+				var _p31 = _p15._0;
+				var c = A2(_elm_community$list_extra$List_Extra$getAt, _p31, model.creatures);
+				var _p25 = c;
+				if (_p25.ctor === 'Nothing') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						model,
 						{ctor: '[]'});
 				} else {
-					var _p31 = _p26._0;
-					var _p27 = function () {
-						var _p28 = _p31.state;
-						switch (_p28.ctor) {
+					var _p30 = _p25._0;
+					var _p26 = function () {
+						var _p27 = _p30.state;
+						switch (_p27.ctor) {
 							case 'DamagePending':
 								var set = A2(
 									_elm_lang$core$Maybe$withDefault,
 									A2(_dskyle$oreroller$RollerModel$Set, 0, 0),
-									A2(_elm_community$list_extra$List_Extra$getAt, _p33, _p31.activePool));
+									A2(_elm_community$list_extra$List_Extra$getAt, _p32, _p30.activePool));
 								return A2(
 									_dskyle$oreroller$Main$do_damage,
-									_p32,
+									_p31,
 									_elm_lang$core$Native_Utils.update(
-										_p31,
+										_p30,
 										{
 											activePool: A2(
 												_elm_lang$core$List$sortWith,
 												_dskyle$oreroller$RollerModel$desc(_dskyle$oreroller$RollerModel$set_compare),
 												A3(
 													_elm_community$list_extra$List_Extra$updateAt,
-													_p33,
+													_p32,
 													function (s) {
 														return A2(_dskyle$oreroller$RollerModel$Set, s.width - 1, s.height);
 													},
-													_p31.activePool)),
+													_p30.activePool)),
 											state: A3(
 												_dskyle$oreroller$RollerModel$DamagePending,
-												_p28._0,
+												_p27._0,
 												A2(
 													_elm_lang$core$List$append,
-													_p28._1,
+													_p27._1,
 													{
 														ctor: '::',
 														_0: set.height,
 														_1: {ctor: '[]'}
 													}),
-												_p28._2)
+												_p27._2)
 										}));
 							case 'SpendingSkill':
-								var _p30 = _p28._0;
-								var val = A2(_elm_community$list_extra$List_Extra_ops['!!'], _p31.skillPool, _p30);
+								var _p29 = _p27._0;
+								var val = A2(_elm_community$list_extra$List_Extra_ops['!!'], _p30.skillPool, _p29);
 								var applySkill = F2(
 									function (c, x) {
 										var set = A2(
 											_elm_lang$core$Maybe$withDefault,
 											A2(_dskyle$oreroller$RollerModel$Set, 0, 0),
-											A2(_elm_community$list_extra$List_Extra_ops['!!'], c.activePool, _p33));
+											A2(_elm_community$list_extra$List_Extra_ops['!!'], c.activePool, _p32));
 										var new_height = set.height + x;
 										return ((_elm_lang$core$Native_Utils.cmp(new_height, 10) > 0) || (_elm_lang$core$Native_Utils.cmp(new_height, 1) < 0)) ? {
 											ctor: '_Tuple2',
@@ -28302,11 +28376,11 @@ var _dskyle$oreroller$Main$update = F2(
 												c,
 												{
 													state: _dskyle$oreroller$RollerModel$Normal,
-													skillPool: A2(_elm_community$list_extra$List_Extra$removeAt, _p30, c.skillPool),
+													skillPool: A2(_elm_community$list_extra$List_Extra$removeAt, _p29, c.skillPool),
 													activePool: function () {
-														var pool = _elm_lang$core$Native_Utils.eq(set.width, 1) ? A2(_elm_community$list_extra$List_Extra$removeAt, _p33, c.activePool) : A3(
+														var pool = _elm_lang$core$Native_Utils.eq(set.width, 1) ? A2(_elm_community$list_extra$List_Extra$removeAt, _p32, c.activePool) : A3(
 															_elm_community$list_extra$List_Extra$updateAt,
-															_p33,
+															_p32,
 															function (s) {
 																return A2(_dskyle$oreroller$RollerModel$Set, s.width - 1, s.height);
 															},
@@ -28325,15 +28399,15 @@ var _dskyle$oreroller$Main$update = F2(
 											_1: _dskyle$oreroller$Main$save_cmd
 										};
 									});
-								var _p29 = val;
+								var _p28 = val;
 								_v18_2:
 								do {
-									if (_p29.ctor === 'Just') {
-										switch (_p29._0) {
+									if (_p28.ctor === 'Just') {
+										switch (_p28._0) {
 											case 1:
-												return A2(applySkill, _p31, -1);
+												return A2(applySkill, _p30, -1);
 											case 3:
-												return A2(applySkill, _p31, 1);
+												return A2(applySkill, _p30, 1);
 											default:
 												break _v18_2;
 										}
@@ -28343,37 +28417,37 @@ var _dskyle$oreroller$Main$update = F2(
 								} while(false);
 								return {
 									ctor: '_Tuple2',
-									_0: _p31,
+									_0: _p30,
 									_1: _elm_lang$core$Basics$always(_elm_lang$core$Platform_Cmd$none)
 								};
 							default:
-								var set = A2(_elm_community$list_extra$List_Extra$getAt, _p33, _p31.activePool);
+								var set = A2(_elm_community$list_extra$List_Extra$getAt, _p32, _p30.activePool);
 								return {
 									ctor: '_Tuple2',
 									_0: _elm_lang$core$Native_Utils.update(
-										_p31,
+										_p30,
 										{
-											activePool: A2(_elm_community$list_extra$List_Extra$removeAt, _p33, _p31.activePool),
+											activePool: A2(_elm_community$list_extra$List_Extra$removeAt, _p32, _p30.activePool),
 											spentPool: A2(
 												_elm_lang$core$List$sortWith,
 												_dskyle$oreroller$RollerModel$desc(_elm_lang$core$Basics$compare),
 												A2(
 													_elm_lang$core$List$append,
-													_p31.spentPool,
+													_p30.spentPool,
 													_dskyle$oreroller$RollerModel$set_split(set)))
 										}),
 									_1: _dskyle$oreroller$Main$save_cmd
 								};
 						}
 					}();
-					var cp = _p27._0;
-					var cmd = _p27._1;
+					var cp = _p26._0;
+					var cmd = _p26._1;
 					var mod = _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							creatures: A3(
 								_elm_community$list_extra$List_Extra$updateAt,
-								_p32,
+								_p31,
 								_elm_lang$core$Basics$always(cp),
 								model.creatures)
 						});
@@ -28384,20 +28458,20 @@ var _dskyle$oreroller$Main$update = F2(
 					};
 				}
 			case 'UnspendDie':
-				var _p35 = _p15._1;
+				var _p34 = _p15._1;
 				return A2(
 					simple_update,
 					_p15._0,
 					function (c) {
-						var die = A2(_elm_community$list_extra$List_Extra$getAt, _p35, c.spentPool);
+						var die = A2(_elm_community$list_extra$List_Extra$getAt, _p34, c.spentPool);
 						return _elm_lang$core$Native_Utils.update(
 							c,
 							{
-								spentPool: A2(_elm_community$list_extra$List_Extra$removeAt, _p35, c.spentPool),
+								spentPool: A2(_elm_community$list_extra$List_Extra$removeAt, _p34, c.spentPool),
 								activePool: function () {
-									var _p34 = die;
-									if (_p34.ctor === 'Just') {
-										return A2(_dskyle$oreroller$RollerModel$set_add_die, _p34._0, c.activePool);
+									var _p33 = die;
+									if (_p33.ctor === 'Just') {
+										return A2(_dskyle$oreroller$RollerModel$set_add_die, _p33._0, c.activePool);
 									} else {
 										return c.activePool;
 									}
@@ -28405,37 +28479,37 @@ var _dskyle$oreroller$Main$update = F2(
 							});
 					});
 			case 'AddDamage':
-				var _p40 = _p15._0;
-				var _p39 = _p15._1;
-				var c = A2(_elm_community$list_extra$List_Extra$getAt, _p40, model.creatures);
-				var _p36 = c;
-				if (_p36.ctor === 'Nothing') {
+				var _p39 = _p15._0;
+				var _p38 = _p15._1;
+				var c = A2(_elm_community$list_extra$List_Extra$getAt, _p39, model.creatures);
+				var _p35 = c;
+				if (_p35.ctor === 'Nothing') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						model,
 						{ctor: '[]'});
 				} else {
-					var _p38 = _p36._0;
+					var _p37 = _p35._0;
 					var cp = _elm_lang$core$Native_Utils.update(
-						_p38,
+						_p37,
 						{
 							state: A3(
 								_dskyle$oreroller$RollerModel$DamagePending,
-								_p39,
+								_p38,
 								{ctor: '[]'},
 								{ctor: '[]'})
 						});
-					var _p37 = (_elm_lang$core$Native_Utils.cmp(_p39, 0) > 0) ? A2(_dskyle$oreroller$Main$do_damage, _p40, cp) : {
+					var _p36 = (_elm_lang$core$Native_Utils.cmp(_p38, 0) > 0) ? A2(_dskyle$oreroller$Main$do_damage, _p39, cp) : {
 						ctor: '_Tuple2',
-						_0: A2(_dskyle$oreroller$Main$do_healing, 0 - _p39, _p38),
+						_0: A2(_dskyle$oreroller$Main$do_healing, 0 - _p38, _p37),
 						_1: _dskyle$oreroller$Main$save_cmd
 					};
-					var cpp = _p37._0;
-					var cmd = _p37._1;
+					var cpp = _p36._0;
+					var cmd = _p36._1;
 					var m = _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							creatures: A3(_elm_community$list_extra$List_Extra$setAt, _p40, cpp, model.creatures)
+							creatures: A3(_elm_community$list_extra$List_Extra$setAt, _p39, cpp, model.creatures)
 						});
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
@@ -28464,6 +28538,13 @@ var _dskyle$oreroller$Main$update = F2(
 							c,
 							{desc: _p15._1});
 					});
+			case 'ResultsOne':
+				return A2(
+					simple_update,
+					_p15._0,
+					function (c) {
+						return A3(updateSets, c, _p15._1._0, _p15._1._1);
+					});
 			case 'CloseDamage':
 				return A2(
 					simple_update,
@@ -28474,43 +28555,43 @@ var _dskyle$oreroller$Main$update = F2(
 							{state: _dskyle$oreroller$RollerModel$Normal});
 					});
 			case 'SpendSkill':
-				var _p45 = _p15._1;
+				var _p44 = _p15._1;
 				return A2(
 					simple_update,
 					_p15._0,
 					function (c) {
-						var dS = A2(_elm_community$list_extra$List_Extra_ops['!!'], c.skillPool, _p45);
-						var _p41 = dS;
-						if ((_p41.ctor === 'Just') && (_p41._0 === 2)) {
+						var dS = A2(_elm_community$list_extra$List_Extra_ops['!!'], c.skillPool, _p44);
+						var _p40 = dS;
+						if ((_p40.ctor === 'Just') && (_p40._0 === 2)) {
 							return _elm_lang$core$Native_Utils.update(
 								c,
 								{
-									skillPool: A2(_elm_community$list_extra$List_Extra$removeAt, _p45, c.skillPool),
+									skillPool: A2(_elm_community$list_extra$List_Extra$removeAt, _p44, c.skillPool),
 									state: function () {
-										var _p42 = c.state;
-										if (_p42.ctor === 'SpendingSkill') {
-											var _p43 = _p42._0;
+										var _p41 = c.state;
+										if (_p41.ctor === 'SpendingSkill') {
+											var _p42 = _p41._0;
 											return _dskyle$oreroller$RollerModel$SpendingSkill(
-												(_elm_lang$core$Native_Utils.cmp(_p43, _p45) > 0) ? (_p43 - 1) : _p43);
+												(_elm_lang$core$Native_Utils.cmp(_p42, _p44) > 0) ? (_p42 - 1) : _p42);
 										} else {
 											return c.state;
 										}
 									}()
 								});
 						} else {
-							var _p44 = c.state;
-							switch (_p44.ctor) {
+							var _p43 = c.state;
+							switch (_p43.ctor) {
 								case 'Normal':
 									return _elm_lang$core$Native_Utils.update(
 										c,
 										{
-											state: _dskyle$oreroller$RollerModel$SpendingSkill(_p45)
+											state: _dskyle$oreroller$RollerModel$SpendingSkill(_p44)
 										});
 								case 'SpendingSkill':
 									return _elm_lang$core$Native_Utils.update(
 										c,
 										{
-											state: _elm_lang$core$Native_Utils.eq(_p44._0, _p45) ? _dskyle$oreroller$RollerModel$Normal : _dskyle$oreroller$RollerModel$SpendingSkill(_p45)
+											state: _elm_lang$core$Native_Utils.eq(_p43._0, _p44) ? _dskyle$oreroller$RollerModel$Normal : _dskyle$oreroller$RollerModel$SpendingSkill(_p44)
 										});
 								default:
 									return c;

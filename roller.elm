@@ -39,7 +39,21 @@ update msg model =
                 {model | creatures = List.append model.creatures [c]} in
         mod ! [cmd mod] in
     let simple_update = base_update save_cmd
-        silent_update = base_update (always Cmd.none) in
+        silent_update = base_update (always Cmd.none)
+        roll = (Random.map2 (,) (
+                Random.list 15 <|
+                Random.int 1 10
+            ) (
+                Random.list 3 <|
+                Random.int 1 3
+            ))
+        updateSets c l s =
+            let dplen = List.length c.damagePool in
+            {c | activePool = gen_sets (List.take (c.d10s - dplen) l),
+                 skillPool = List.sort (List.take c.dSs s),
+                 spentPool = [],
+                 state = Normal}
+    in
     case msg of
         NullMsg -> (model, Cmd.none)
         NullStrMsg s -> (model, Cmd.none)
@@ -56,24 +70,14 @@ update msg model =
         ClearAll -> let mod = {model | creatures = [defaultCreature]} in (mod, save_cmd mod)
         Roll ->
             (model, Random.generate Results <|
-                Random.list (List.length model.creatures) <|
-                    Random.map2 (,) (
-                            Random.list 15 <|
-                            Random.int 1 10
-                        ) (
-                            Random.list 3 <|
-                            Random.int 1 3
-                        )
-            )
+                Random.list (List.length model.creatures) roll)
+        RollOne i ->
+            (model, Random.generate (ResultsOne i) roll)
         
         Results list ->
             let l = List.Extra.zip model.creatures list in
             let mod = {model | creatures = List.map (\(c, (l, s)) ->
-                let dplen = List.length c.damagePool in
-                {c | activePool = gen_sets (List.take (c.d10s - dplen) l),
-                     skillPool = List.sort (List.take c.dSs s),
-                     spentPool = [],
-                     state = Normal}) l} in
+                updateSets c l s) l} in
             (mod, save_cmd mod)
         DamageResult cid prev dice ->
             let c = List.Extra.getAt cid model.creatures in
@@ -181,6 +185,8 @@ update msg model =
             silent_update i (\c -> {c | name = s })
         DescChange i s ->
             silent_update i (\c -> {c | desc = s })
+        ResultsOne i (l, s) ->
+            simple_update i (\c -> updateSets c l s)
         CloseDamage cid ->
             simple_update cid (\c -> {c | state = Normal })
         SpendSkill i s ->
