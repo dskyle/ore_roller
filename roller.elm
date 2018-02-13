@@ -170,7 +170,7 @@ update msg model =
                         Just die -> set_add_die die c.activePool
                         Nothing -> c.activePool
                 })
-        AddDamage cid amt ->
+        RollDamage cid amt ->
             let c = List.Extra.getAt cid model.creatures in
             case c of
                 Nothing -> model ! []
@@ -181,6 +181,19 @@ update msg model =
                     in
                     let m = {model | creatures = List.Extra.setAt cid cpp model.creatures} in
                     m ! [cmd m]
+        ModifyDamage cid amt ->
+            simple_update cid (\c->
+                if amt > 0 then
+                    let elig_tokens = clamp 0 6 (6 - c.damageTokens) in
+                    if elig_tokens > 0 then
+                        { c | damageTokens = c.damageTokens + 1 }
+                    else
+                        case List.Extra.uncons c.spentPool of
+                            Just (head, tail) ->
+                                { c | spentPool = tail, damagePool = List.append c.damagePool [head]}
+                            Nothing -> c
+                else
+                    do_healing (0 - amt) c)
         NameChange i s ->
             silent_update i (\c -> {c | name = s })
         DescChange i s ->

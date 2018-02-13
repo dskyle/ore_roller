@@ -198,7 +198,8 @@ type Msg
     | SpendSet Int Int
     | UnspendDie Int Int
     | SpendSkill Int Int
-    | AddDamage Int Int
+    | RollDamage Int Int
+    | ModifyDamage Int Int
     | DamageResult Int (List Int) (List Int)
     | CloseDamage Int
     | ChangeD10s Int Int

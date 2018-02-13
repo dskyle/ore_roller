@@ -87,9 +87,10 @@ renderSpent cid c =
     ]
 
 renderDamage : Int -> Creature -> Element MyStyles MyVariations Msg
-renderDamage cid c = 
+renderDamage cid c =
+    let dmgCount = c.damageTokens + (List.length c.damagePool) in
     column DamagePoolStyle [padding 5, spacing 5] [
-        el LabelStyle [] (text <| "Damage (" ++ (toString (c.damageTokens + (List.length c.damagePool))) ++ ")"),
+        el LabelStyle [] (text <| "Damage (" ++ (toString dmgCount ++ ")")),
         let rcount = case c.state of
             Normal -> 4
             _ -> 2 in
@@ -113,12 +114,22 @@ renderDamage cid c =
                         ]
                     else if x < 22 then
                         let amount = x - 11 in
-                        button ButtonStyle [Events.onClick (AddDamage cid amount)]
-                            (text ("+" ++ (toString amount)))
+                        button ButtonStyle [Events.onClick (RollDamage cid amount)]
+                            (text (toString amount))
                     else if x == 22 then
-                        button ButtonStyle [Events.onClick (AddDamage cid -1)] (text "-1")
+                        button ButtonStyle [
+                            if dmgCount > 0 then
+                                Events.onClick (ModifyDamage cid -1)
+                            else
+                                vary Ghosted True
+                            ] (text "-1")
                     else
-                        button ButtonStyle [Events.onClick (AddDamage cid -3)] (text "-3")
+                        button ButtonStyle [
+                            if dmgCount < 6 || (List.length c.spentPool) > 0 then
+                                Events.onClick (ModifyDamage cid 1)
+                            else
+                                vary Ghosted True
+                        ] (text "+1")
                 })
         },
         case c.state of
