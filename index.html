@@ -11538,9 +11538,13 @@ var _dskyle$oreroller$RollerModel$DamageResult = F3(
 	function (a, b, c) {
 		return {ctor: 'DamageResult', _0: a, _1: b, _2: c};
 	});
-var _dskyle$oreroller$RollerModel$AddDamage = F2(
+var _dskyle$oreroller$RollerModel$ModifyDamage = F2(
 	function (a, b) {
-		return {ctor: 'AddDamage', _0: a, _1: b};
+		return {ctor: 'ModifyDamage', _0: a, _1: b};
+	});
+var _dskyle$oreroller$RollerModel$RollDamage = F2(
+	function (a, b) {
+		return {ctor: 'RollDamage', _0: a, _1: b};
 	});
 var _dskyle$oreroller$RollerModel$SpendSkill = F2(
 	function (a, b) {
@@ -26977,6 +26981,7 @@ var _dskyle$oreroller$RollerView$renderPool = F3(
 	});
 var _dskyle$oreroller$RollerView$renderDamage = F2(
 	function (cid, c) {
+		var dmgCount = c.damageTokens + _elm_lang$core$List$length(c.damagePool);
 		return A3(
 			_mdgriffith$style_elements$Element$column,
 			_dskyle$oreroller$RollerStyle$DamagePoolStyle,
@@ -27001,8 +27006,7 @@ var _dskyle$oreroller$RollerView$renderDamage = F2(
 							'Damage (',
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								_elm_lang$core$Basics$toString(
-									c.damageTokens + _elm_lang$core$List$length(c.damagePool)),
+								_elm_lang$core$Basics$toString(dmgCount),
 								')')))),
 				_1: {
 					ctor: '::',
@@ -27109,14 +27113,11 @@ var _dskyle$oreroller$RollerView$renderDamage = F2(
 																{
 																	ctor: '::',
 																	_0: _mdgriffith$style_elements$Element_Events$onClick(
-																		A2(_dskyle$oreroller$RollerModel$AddDamage, cid, amount)),
+																		A2(_dskyle$oreroller$RollerModel$RollDamage, cid, amount)),
 																	_1: {ctor: '[]'}
 																},
 																_mdgriffith$style_elements$Element$text(
-																	A2(
-																		_elm_lang$core$Basics_ops['++'],
-																		'+',
-																		_elm_lang$core$Basics$toString(amount))));
+																	_elm_lang$core$Basics$toString(amount)));
 														} else {
 															if (_elm_lang$core$Native_Utils.eq(x, 22)) {
 																return A3(
@@ -27124,8 +27125,8 @@ var _dskyle$oreroller$RollerView$renderDamage = F2(
 																	_dskyle$oreroller$RollerStyle$ButtonStyle,
 																	{
 																		ctor: '::',
-																		_0: _mdgriffith$style_elements$Element_Events$onClick(
-																			A2(_dskyle$oreroller$RollerModel$AddDamage, cid, -1)),
+																		_0: (_elm_lang$core$Native_Utils.cmp(dmgCount, 0) > 0) ? _mdgriffith$style_elements$Element_Events$onClick(
+																			A2(_dskyle$oreroller$RollerModel$ModifyDamage, cid, -1)) : A2(_mdgriffith$style_elements$Element_Attributes$vary, _dskyle$oreroller$RollerStyle$Ghosted, true),
 																		_1: {ctor: '[]'}
 																	},
 																	_mdgriffith$style_elements$Element$text('-1'));
@@ -27135,11 +27136,13 @@ var _dskyle$oreroller$RollerView$renderDamage = F2(
 																	_dskyle$oreroller$RollerStyle$ButtonStyle,
 																	{
 																		ctor: '::',
-																		_0: _mdgriffith$style_elements$Element_Events$onClick(
-																			A2(_dskyle$oreroller$RollerModel$AddDamage, cid, -3)),
+																		_0: ((_elm_lang$core$Native_Utils.cmp(dmgCount, 6) < 0) || (_elm_lang$core$Native_Utils.cmp(
+																			_elm_lang$core$List$length(c.spentPool),
+																			0) > 0)) ? _mdgriffith$style_elements$Element_Events$onClick(
+																			A2(_dskyle$oreroller$RollerModel$ModifyDamage, cid, 1)) : A2(_mdgriffith$style_elements$Element_Attributes$vary, _dskyle$oreroller$RollerStyle$Ghosted, true),
 																		_1: {ctor: '[]'}
 																	},
-																	_mdgriffith$style_elements$Element$text('-3'));
+																	_mdgriffith$style_elements$Element$text('+1'));
 															}
 														}
 													}
@@ -28478,7 +28481,7 @@ var _dskyle$oreroller$Main$update = F2(
 								}()
 							});
 					});
-			case 'AddDamage':
+			case 'RollDamage':
 				var _p39 = _p15._0;
 				var _p38 = _p15._1;
 				var c = A2(_elm_community$list_extra$List_Extra$getAt, _p39, model.creatures);
@@ -28520,6 +28523,42 @@ var _dskyle$oreroller$Main$update = F2(
 							_1: {ctor: '[]'}
 						});
 				}
+			case 'ModifyDamage':
+				var _p41 = _p15._1;
+				return A2(
+					simple_update,
+					_p15._0,
+					function (c) {
+						if (_elm_lang$core$Native_Utils.cmp(_p41, 0) > 0) {
+							var elig_tokens = A3(_elm_lang$core$Basics$clamp, 0, 6, 6 - c.damageTokens);
+							if (_elm_lang$core$Native_Utils.cmp(elig_tokens, 0) > 0) {
+								return _elm_lang$core$Native_Utils.update(
+									c,
+									{damageTokens: c.damageTokens + 1});
+							} else {
+								var _p40 = _elm_community$list_extra$List_Extra$uncons(c.spentPool);
+								if (_p40.ctor === 'Just') {
+									return _elm_lang$core$Native_Utils.update(
+										c,
+										{
+											spentPool: _p40._0._1,
+											damagePool: A2(
+												_elm_lang$core$List$append,
+												c.damagePool,
+												{
+													ctor: '::',
+													_0: _p40._0._0,
+													_1: {ctor: '[]'}
+												})
+										});
+								} else {
+									return c;
+								}
+							}
+						} else {
+							return A2(_dskyle$oreroller$Main$do_healing, 0 - _p41, c);
+						}
+					});
 			case 'NameChange':
 				return A2(
 					silent_update,
@@ -28555,43 +28594,43 @@ var _dskyle$oreroller$Main$update = F2(
 							{state: _dskyle$oreroller$RollerModel$Normal});
 					});
 			case 'SpendSkill':
-				var _p44 = _p15._1;
+				var _p46 = _p15._1;
 				return A2(
 					simple_update,
 					_p15._0,
 					function (c) {
-						var dS = A2(_elm_community$list_extra$List_Extra_ops['!!'], c.skillPool, _p44);
-						var _p40 = dS;
-						if ((_p40.ctor === 'Just') && (_p40._0 === 2)) {
+						var dS = A2(_elm_community$list_extra$List_Extra_ops['!!'], c.skillPool, _p46);
+						var _p42 = dS;
+						if ((_p42.ctor === 'Just') && (_p42._0 === 2)) {
 							return _elm_lang$core$Native_Utils.update(
 								c,
 								{
-									skillPool: A2(_elm_community$list_extra$List_Extra$removeAt, _p44, c.skillPool),
+									skillPool: A2(_elm_community$list_extra$List_Extra$removeAt, _p46, c.skillPool),
 									state: function () {
-										var _p41 = c.state;
-										if (_p41.ctor === 'SpendingSkill') {
-											var _p42 = _p41._0;
+										var _p43 = c.state;
+										if (_p43.ctor === 'SpendingSkill') {
+											var _p44 = _p43._0;
 											return _dskyle$oreroller$RollerModel$SpendingSkill(
-												(_elm_lang$core$Native_Utils.cmp(_p42, _p44) > 0) ? (_p42 - 1) : _p42);
+												(_elm_lang$core$Native_Utils.cmp(_p44, _p46) > 0) ? (_p44 - 1) : _p44);
 										} else {
 											return c.state;
 										}
 									}()
 								});
 						} else {
-							var _p43 = c.state;
-							switch (_p43.ctor) {
+							var _p45 = c.state;
+							switch (_p45.ctor) {
 								case 'Normal':
 									return _elm_lang$core$Native_Utils.update(
 										c,
 										{
-											state: _dskyle$oreroller$RollerModel$SpendingSkill(_p44)
+											state: _dskyle$oreroller$RollerModel$SpendingSkill(_p46)
 										});
 								case 'SpendingSkill':
 									return _elm_lang$core$Native_Utils.update(
 										c,
 										{
-											state: _elm_lang$core$Native_Utils.eq(_p43._0, _p44) ? _dskyle$oreroller$RollerModel$Normal : _dskyle$oreroller$RollerModel$SpendingSkill(_p44)
+											state: _elm_lang$core$Native_Utils.eq(_p45._0, _p46) ? _dskyle$oreroller$RollerModel$Normal : _dskyle$oreroller$RollerModel$SpendingSkill(_p46)
 										});
 								default:
 									return c;
